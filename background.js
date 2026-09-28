@@ -229,7 +229,7 @@ function shipmentFolder(s) {
 }
 
 function labelFilename(s, index, count) {
-  return `${shipmentFolder(s)}_${index + 1}of${count}.png`;
+  return `${shipmentFolder(s)}_${index + 1}of${count}.pdf`;
 }
 
 function batchStamp() {
@@ -293,7 +293,12 @@ async function runBatch(shipments) {
         const folder = shipmentFolder(s);
         const names = shots.map((data, n) => {
           const name = labelFilename(s, n, shots.length);
-          files.push({ path: `${folder}/${name}`, base64: data });
+          files.push({
+            path: `${folder}/${name}`,
+            base64: data,
+            width: info.labels[n].width,
+            height: info.labels[n].height,
+          });
           return name;
         });
 

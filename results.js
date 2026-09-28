@@ -57,9 +57,40 @@
     zipBtn.disabled = true;
     zipBtn.textContent = "Building ZIP…";
 
+    const { jsPDF } = window.jspdf;
+
+    // CSS pixels are defined as 96 DPI; PDFs are measured in points (72 DPI).
+    // Converting to points gives a PDF that prints at the label's true physical size.
+    const PX_TO_PT = 72 / 96;
+
     const zip = new JSZip();
     const root = zip.folder(`labels_${stamp}`);
-    for (const f of files) root.file(f.path, f.base64, { base64: true });
+
+    for (const f of files) {
+      const wPt = f.width * PX_TO_PT;
+      const hPt = f.height * PX_TO_PT;
+
+      const pdf = new jsPDF({
+        orientation: f.width > f.height ? "landscape" : "portrait",
+        unit: "pt",
+        format: [wPt, hPt],
+        compress: true,
+      });
+
+      pdf.addImage(
+        "data:image/png;base64," + f.base64,
+        "PNG",
+        0,
+        0,
+        wPt,
+        hPt,
+        undefined,
+        "FAST"
+      );
+
+      root.file(f.path, pdf.output("blob"));
+    }
+
     root.file(
       "_manifest.json",
       JSON.stringify({ created: stamp, results }, null, 2)
