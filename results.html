@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Label capture results</title>
+    <style>
+      body {
+        background: #222;
+        color: #eee;
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: 16px;
+      }
+      h1 {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0 0 8px;
+      }
+      #summary {
+        opacity: 0.75;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+      button {
+        padding: 8px 14px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 13px;
+      }
+      td,
+      th {
+        padding: 4px 12px;
+        text-align: left;
+        border-bottom: 1px solid #444;
+      }
+      .ok {
+        color: #7ddf7d;
+      }
+      .failed {
+        color: #ff7b7b;
+      }
+      .count-mismatch {
+        color: #ffd166;
+      }
+      #previews img {
+        display: block;
+        margin: 0 auto 12px;
+        max-width: 100%;
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Label capture</h1>
+    <div id="summary">Loading…</div>
+    <button id="zip-btn" disabled>Download ZIP</button>
+    <table id="table"></table>
+    <div id="previews"></div>
+
+    <script src="jszip.min.js"></script>
+    <script src="results.js"></script>
+  </body>
+</html>
